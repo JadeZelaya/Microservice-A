@@ -2,25 +2,27 @@ const express = require('express');
 const app = express();
 
 // Sample data: a list of flashcards (in a real application, you'd use a database)
-//let flashcards = [
-//  { id: 1, question: "What is 2 + 2?", answer: "4" },
-//  { id: 2, question: "What is the capital of France?", answer: "Paris" },
-//  { id: 3, question: "What is the largest planet?", answer: "Jupiter" }
-//];
+let flashcards = [
+  { question: "What is 2 + 2?", answer: "4" },
+  { question: "What is the capital of France?", answer: "Paris" },
+  { question: "What is the largest planet?", answer: "Jupiter" }
+];
 
 // Middleware to parse JSON bodies for POST/DELETE requests
 app.use(express.json());
 
-// DELETE endpoint to remove a flashcard by ID
-app.delete('/flashcards/:id', (req, res) => {
-  const id = parseInt(req.params.id); // Get ID from URL
-  const index = flashcards.findIndex(card => card.id === id);
+// DELETE endpoint to remove a flashcard by its question
+app.delete('/flashcards', (req, res) => {
+  const { question } = req.body; // Get the question from the request body
+
+  // Find the index of the flashcard with the matching question
+  const index = flashcards.findIndex(card => card.question === question);
 
   if (index !== -1) {
-    flashcards.splice(index, 1); // Remove the item from the array
-    res.status(200).json({ message: `Flashcard with ID ${id} deleted successfully` });
+    flashcards.splice(index, 1); // Remove the flashcard from the array
+    res.status(200).json({ message: `Flashcard with question "${question}" deleted successfully` });
   } else {
-    res.status(404).json({ message: `Flashcard with ID ${id} not found` });
+    res.status(404).json({ message: `Flashcard with question "${question}" not found` });
   }
 });
 
