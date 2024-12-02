@@ -9,7 +9,7 @@ const csvFilePath = path.join(__dirname, 'flashcards.csv');
 
 // Sample data (for in-memory flashcards)
 let flashcards = [
-  { question: "What is 2 + 2?", answer: "4" },
+  { question: "What is 2 + 2?", answer: "22" },
   { question: "What is the capital of France?", answer: "Paris" },
   { question: "What is the largest planet?", answer: "Jupiter" }
 ];
